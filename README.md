@@ -11,7 +11,7 @@ pip install binaryninja-finder
 Or with [uv](https://docs.astral.sh/uv/):
 
 ```
-uv pip install binaryninja-finder
+uv add binaryninja-finder
 ```
 
 Once installed, `import binaryninja` will work in any script or REPL that uses the same Python environment.
