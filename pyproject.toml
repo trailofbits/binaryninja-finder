@@ -1,0 +1,28 @@
+[build-system]
+requires = ["uv_build>=0.10.3,<0.11.0"]
+build-backend = "uv_build"
+
+[project]
+name = "binaryninja-finder"
+version = "0.1.0"
+description = "Find and install Binary Ninja's Python API"
+requires-python = ">=3.9"
+
+[tool.uv.build-backend]
+data = { purelib = "_pth" }
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.2",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["ANN", "D", "COM812", "ISC001"]
+
+[tool.ruff.lint.per-file-ignores]
+"_startup.py" = ["BLE001", "PLC0415", "S110", "SIM105"]
