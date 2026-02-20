@@ -33,18 +33,6 @@ The search order is:
 | `BN_INSTALL_DIR` | Override the Binary Ninja installation directory |
 | `BN_USER_DIRECTORY` | Override the Binary Ninja user config directory (where `lastrun` is stored) |
 
-## Programmatic usage
-
-You can also use the finder directly:
-
-```python
-from binaryninja_finder._finder import find_binary_ninja
-
-path = find_binary_ninja()
-if path:
-    print(f"Found Binary Ninja Python API at: {path}")
-```
-
 ## License
 
 See [LICENSE](LICENSE) for details.

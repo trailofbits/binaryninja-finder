@@ -14,7 +14,8 @@ def _user_dir() -> Path:
     if sys.platform == "darwin":
         return Path.home() / "Library" / "Application Support" / "Binary Ninja"
     if sys.platform == "win32":
-        return Path(os.environ.get("APPDATA", "")) / "Binary Ninja"
+        appdata = os.environ.get("APPDATA") or str(Path.home() / "AppData" / "Roaming")
+        return Path(appdata) / "Binary Ninja"
     return Path.home() / ".binaryninja"
 
 
@@ -31,23 +32,26 @@ def _common_paths() -> list[Path]:
     return []
 
 
-def find_binary_ninja(*, validate: bool = True) -> Path | None:
+def _python_dir(install_dir: Path) -> Path:
+    if sys.platform == "darwin":
+        return install_dir / "Contents" / "Resources" / "python"
+    return install_dir / "python"
+
+
+def _find_binary_ninja(*, validate: bool = True) -> Path | None:
     """Find the Binary Ninja Python API directory."""
     candidates: list[Path] = []
 
     env_install = os.environ.get("BN_INSTALL_DIR")
     if env_install:
-        candidates.append(_python_dir(Path(env_install)))
+        p = Path(env_install)
+        candidates.append(_python_dir(p))
 
     try:
-        install_dir = (_user_dir() / "lastrun").read_text().strip()
-        candidates.append(
-            install_dir / "Contents" / "Resources" / "python"
-            if sys.platform == "darwin"
-            else install_dir / "python"
-        )
+        install_dir = Path((_user_dir() / "lastrun").read_text().strip())
+        candidates.append(_python_dir(install_dir))
     except OSError:
-        install_dir = ""
+        pass
 
     for path in candidates:
         if not validate or (path / "binaryninja" / "__init__.py").is_file():
@@ -63,7 +67,7 @@ def find_binary_ninja(*, validate: bool = True) -> Path | None:
 def _setup() -> None:
     if importlib.util.find_spec("binaryninja") is not None:
         return
-    if (path := find_binary_ninja()) is not None:
+    if (path := _find_binary_ninja()) is not None:
         sys.path.append(str(path))
 
 
