@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import contextlib
 import importlib.util
 import os
 import sys
@@ -69,7 +68,3 @@ def _setup() -> None:
         return
     if (path := _find_binary_ninja()) is not None:
         sys.path.append(str(path))
-
-
-with contextlib.suppress(Exception):
-    _setup()

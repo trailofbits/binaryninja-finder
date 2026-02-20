@@ -1,1 +1,1 @@
-import binaryninja_finder
+import binaryninja_finder; binaryninja_finder._setup()
