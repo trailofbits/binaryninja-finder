@@ -5,13 +5,13 @@ Automatically finds and adds Binary Ninja's Python API to `sys.path` at interpre
 ## Installation
 
 ```
-pip install binaryninja-finder
+pip install git+https://github.com/trailofbits/binaryninja-finder
 ```
 
 Or with [uv](https://docs.astral.sh/uv/):
 
 ```
-uv add binaryninja-finder
+uv add git+https://github.com/trailofbits/binaryninja-finder
 ```
 
 Once installed, `import binaryninja` will work in any script or REPL that uses the same Python environment.
