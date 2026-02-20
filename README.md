@@ -1,6 +1,6 @@
 # binaryninja-finder
 
-Automatically finds and adds Binary Ninja's Python API to `sys.path` at interpreter startup — no manual path manipulation needed.
+Automatically finds and adds Binary Ninja's Python API to `sys.path` at interpreter startup.
 
 ## Installation
 
