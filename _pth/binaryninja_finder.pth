@@ -1,1 +1,1 @@
-import binaryninja_finder._startup
+import binaryninja_finder

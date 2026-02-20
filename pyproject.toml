@@ -24,5 +24,3 @@ target-version = "py39"
 select = ["ALL"]
 ignore = ["ANN", "D", "COM812", "ISC001"]
 
-[tool.ruff.lint.per-file-ignores]
-"_startup.py" = ["BLE001", "PLC0415", "S110", "SIM105"]
