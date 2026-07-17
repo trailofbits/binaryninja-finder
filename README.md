@@ -4,17 +4,35 @@ Automatically finds and adds Binary Ninja's Python API to `sys.path` at interpre
 
 ## Installation
 
-```
-pip install git+https://github.com/trailofbits/binaryninja-finder
-```
-
-Or with [uv](https://docs.astral.sh/uv/):
-
-```
-uv add git+https://github.com/trailofbits/binaryninja-finder
+```console
+uv add binaryninja-finder
 ```
 
 Once installed, `import binaryninja` will work in any script or REPL that uses the same Python environment.
+
+For a one-off command, use `uv run --with` without adding the package to a project:
+
+```console
+uv run --with binaryninja-finder python -c 'import binaryninja; print(binaryninja.core_version())'
+```
+
+## Standalone scripts
+
+Add [inline dependency metadata](https://docs.astral.sh/uv/guides/scripts/#declaring-script-dependencies) to make a Binary Ninja script runnable without a project or virtual environment:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# dependencies = ["binaryninja-finder"]
+# ///
+
+import binaryninja
+
+print(binaryninja.core_version())
+```
+
+Save it as `example.py`, then run it with `uv run example.py`. On systems that support shebangs, you can also make it executable with `chmod +x example.py` and run `./example.py` directly.
 
 ## How it works
 
