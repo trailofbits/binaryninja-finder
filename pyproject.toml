@@ -1,26 +1,19 @@
 [build-system]
-requires = ["uv_build>=0.10.3,<0.11.0"]
+requires = ["uv_build>=0.11.0,<0.12.0"]
 build-backend = "uv_build"
 
 [project]
 name = "binaryninja-finder"
-version = "0.1.0"
+version = "0.2.0"
 description = "Find and install Binary Ninja's Python API"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.9"
+
+[project.urls]
+Issues = "https://github.com/trailofbits/binaryninja-finder/issues"
+Source = "https://github.com/trailofbits/binaryninja-finder"
 
 [tool.uv.build-backend]
 data = { purelib = "_pth" }
-
-[dependency-groups]
-dev = [
-    "ruff>=0.15.2",
-]
-
-[tool.ruff]
-line-length = 100
-target-version = "py39"
-
-[tool.ruff.lint]
-select = ["ALL"]
-ignore = ["ANN", "D", "COM812", "ISC001"]
-

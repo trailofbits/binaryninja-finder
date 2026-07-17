@@ -1,0 +1,3 @@
+# Keep this filename alphabetically after binaryninja_finder.pth. Editable
+# installs need that file to add the module to sys.path before this hook runs.
+import binaryninja_finder; binaryninja_finder._setup()
