@@ -1,0 +1,49 @@
+name: Smoke test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: "17 13 1 * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  binary-ninja:
+    name: Find Binary Ninja
+    if: github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Install uv and Python
+        uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
+        with:
+          enable-cache: false
+          python-version: "3.13"
+
+      - name: Install Binary Ninja
+        id: binary-ninja
+        uses: Vector35/setup-binary-ninja@2eb40222af97699a720a0ea330c75b98ce61c49c # v1-beta
+        with:
+          license: '${{ secrets.BN_SERIAL }}'
+          dev-branch: true
+          python-support: false
+
+      - name: Import Binary Ninja through editable binaryninja-finder
+        env:
+          BN_INSTALL_DIR: ${{ steps.binary-ninja.outputs.install-path }}
+        run: uv run --isolated --no-project --with-editable . python -c "import binaryninja; print(binaryninja.core_version())"
+
+      - name: Import Binary Ninja through non-editable binaryninja-finder
+        env:
+          BN_INSTALL_DIR: ${{ steps.binary-ninja.outputs.install-path }}
+        run: uv run --isolated --no-project --with . python -c "import binaryninja; print(binaryninja.core_version())"
